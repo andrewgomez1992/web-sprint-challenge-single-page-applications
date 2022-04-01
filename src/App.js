@@ -1,20 +1,32 @@
 import React, { useState, useEffect } from "react";
-import { Switch, Route } from 'react-router-dom';
-
+import { Switch, Route, Link } from 'react-router-dom';
+import OrderForm from './Components/orderForm';
+import MyOrder from './Components/myOrder';
+import Home from './Components/home'
+import './App.css';
 
 const App = () => {
+
+  const [pizza, setPizza] = useState();
+
+
   return (
     <>
+      <header>
+        <Link to='/'>Home</Link>
+        <Link to='/pizza'>Create Your Pizza</Link>
+        <Link to='/myorder'>My Order</Link>
+      </header>
       <main>
         <Switch>
           <Route exact path="/">
-            <h1>Pizza for Programmers</h1>
+            <Home />
           </Route>
           <Route exact path="/pizza">
-            <h1>Create Your Pizza!</h1>
+            <OrderForm />
           </Route>
           <Route exact path="/myorder">
-            <h1>Your Order</h1>
+            <MyOrder />
           </Route>
         </Switch>
       </main>

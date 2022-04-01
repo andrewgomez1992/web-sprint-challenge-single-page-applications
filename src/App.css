@@ -32,7 +32,57 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
+}
+
+main {
+  text-align: center;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  padding: 5%;
+}
+
+header a {
+  text-decoration: none;
+  font-weight: 600;
+}
+
+img {
+  width: 100%;
+}
+
+* {
+  background-color: black;
+  color: white;
+  text-align: center;
+}
+
+.homebtn {
+  font-size: 2rem;
+  background-color: black;
+  position: absolute;
+  margin: 10%;
+  border-radius: 15px;
+}
+
+.homepage {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+
+img {
+  height: 475px;
+  border-radius: 20px;
+}
+
+.buildpizza {
+  margin-left: 20%;
+  margin-right: 20%;
 }
