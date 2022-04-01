@@ -84,8 +84,8 @@ const OrderForm = () => {
                     <label>
                         <input type="text" name="" id="" />
                     </label>
-                    <input type="password" name='password' id="" />
-                    <button className="createbtn" type="submit">Create My Pizza!</button>
+                    <input type="password" name='password' id="name-input" />
+                    <button className="createbtn" type="submit" id="pizza-form">Create My Pizza!</button>
                 </form>
             </div>
         </>
