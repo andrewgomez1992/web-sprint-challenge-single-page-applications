@@ -79,6 +79,51 @@ const OrderForm = () => {
                             // checked={values.civil === 'single'}
                             />BBQ Sauce
                         </label>
+                        <h3>Toppings</h3>
+                        <label>
+                            <input
+                                type="checkbox"
+                                name="olives"
+                            //   checked={formValues.olives}
+                            //   onChange={change}
+                            />Olives
+                        </label>
+                        <br />
+                        <label>
+                            <input
+                                type="checkbox"
+                                name="mushrooms"
+                            //   checked={formValues.mushrooms}
+                            //   onChange={change}
+                            />Mushrooms
+                        </label>
+                        <br />
+                        <label>
+                            <input
+                                type="checkbox"
+                                name="jalapenos"
+                            //   checked={formValues.jalapenos}
+                            //   onChange={change}
+                            />Jalapenos
+                        </label>
+                        <br />
+                        <label>
+                            <input
+                                type="checkbox"
+                                name="extraCheese"
+                            //   checked={formValues.extraCheese}
+                            //   onChange={change}
+                            />Extra Cheese
+                        </label>
+                        <br />
+                        <h4>Special Instructions</h4>
+                        <input
+                            type="text"
+                            name="instructions"
+                            placeholder="Enter delivery instructions"
+                        //     value={formValues.instructions}
+                        //     onChange={change}
+                        />
                     </div>
                     <br />
                     <label>
