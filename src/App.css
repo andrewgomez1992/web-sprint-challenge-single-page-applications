@@ -58,8 +58,11 @@ img {
 }
 
 * {
-  background-color: black;
-  color: white;
+  background-color: rgb(193, 191, 191);
+  color: rgb(54, 49, 49);
+  /* font-weight: 600; */
+  /* padding: 2%; */
+  font-family: 'Fredoka One', cursive;
 }
 
 .homebtn {
@@ -87,7 +90,7 @@ img {
 }
 
 h4 {
-  font-size: .7rem;
+  font-size: 1.5rem;
 }
 
 h3 {
@@ -98,4 +101,39 @@ h3 {
   text-align: start;
   display: flex;
   flex-direction: column;
+}
+
+.specialinstructions {
+  width: 25%;
+  padding: 10%;
+}
+
+.errors {
+  color: red;
+}
+
+#pizza-form {
+  display: flex;
+  text-align: left;
+  flex-direction: column;
+}
+
+#order-button {
+  width: 30%;
+  margin: 8%;
+}
+
+.order-details {
+  font-size: 1rem;
+}
+
+#name-input {
+  padding: 1%;
+  margin-left: 5%;
+}
+
+#size-dropdown {
+  font-size: 1rem;
+  margin: 2%;
+
 }
