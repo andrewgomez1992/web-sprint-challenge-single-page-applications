@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Switch, Route, Link } from 'react-router-dom';
 import OrderForm from './Components/pizzaForm';
 import MyOrder from './Components/myOrder';
-import Home from './Components/Home'
+import Home from './Components/home'
 import './App.css';
 
 const App = () => {
