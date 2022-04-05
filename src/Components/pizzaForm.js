@@ -198,12 +198,12 @@ const OrderForm = (props) => {
                             />Extra Cheese
                         </label>
                         <br />
-                        <h4 id="special-text">Special Instructions</h4>
+                        <h4 id="special-text">Here are the special instructions</h4>
                         <input className="specialinstructions"
                             type="text"
-                            name="instructions"
+                            name="Here are the special instructions"
                             placeholder="Here are the special instructions"
-                            value={orderValues.instructions}
+                            value={"Here are the special instructions"}
                             onChange={change}
                         />
                     </div>
