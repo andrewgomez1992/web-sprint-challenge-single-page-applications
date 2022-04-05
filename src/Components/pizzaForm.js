@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import * as yup from "yup";
 import schema from '../formSchema'
-import { useHistory } from 'react-router-dom';
+import { useHistory, useRouteMatch } from 'react-router-dom';
 
 const initialOrderValues = {
     name: "",
@@ -22,31 +22,44 @@ const initialOrderErrors = {
     sauce: "",
 };
 
-// const initialOrder = []
-// const initialDisabled = true
+const initialOrder = []
 
+const OrderForm = (props) => {
 
-const OrderForm = ({ order, setOrder }) => {
-
-
-
-    const [orders, setOrders] = useState([]);
+    const [orders, setOrders] = useState(initialOrder);
     const [orderValues, setOrderValues] = useState(initialOrderValues);
     const [orderErrors, setOrderErrors] = useState(initialOrderErrors);
     const [disabled, setDisabled] = useState(true);
     const history = useHistory();
 
-    const postNewOrder = newOrder => {
-        axios.post('https://reqres.in/api/orders', newOrder)
-            .then((res) => {
-                setOrders([res.data, ...orders]);
+    const submit = evt => {
+        evt.preventDefault();
+        const newOrder = {
+            name: orderValues.name.trim(),
+            size: orderValues.size.trim(),
+            sauce: orderValues.sauce.trim(),
+            toppings: ["Olives", "Bacon", "Mushrooms", "Jalapenos", "Cheesier"]
+                .filter((topping) => orderValues[topping]),
+            instructions: ("Here are the special instructions", orderValues.instructions)
+        }
+        axios.post("https://reqres.in/api/orders", newOrder)
+            .then(res => {
+                setOrders([res.data, ...orders])
                 setOrderValues(initialOrderValues)
-                console.log(orders)
+                console.log("HEY RIGHT HERE", res.data)
+                // history.push("/myorder")
+            }).catch(err => {
+                console.error(err)
+                debugger
             })
-            .catch((err) => {
-                console.log(err);
+    }
+
+    useEffect(() => {
+        schema.isValid(orderValues)
+            .then((valid) => {
+                setDisabled(!valid);
             });
-    };
+    }, [orderValues]);
 
     const validate = (name, value) => {
         yup.reach(schema, name)
@@ -63,32 +76,8 @@ const OrderForm = ({ order, setOrder }) => {
 
     const inputChange = (name, value) => {
         validate(name, value);
-        setOrderValues({ ...orderValues, [name]: value, });
+        setOrderValues({ ...orderValues, [name]: value });
     };
-
-    const SubmitHandler = (evt) => {
-        evt.preventDefault();
-        setOrders([...orders, order])
-        const newOrder = {
-            name: orderValues.name.trim(),
-            size: orderValues.size.trim(),
-            sauce: orderValues.sauce.trim(),
-            toppings: ["Olives", "Bacon", "Mushrooms", "Jalapenos", "Cheesier"]
-                .filter((topping) => orderValues[topping]),
-            instructions: orderValues.instructions,
-
-        };
-        postNewOrder(newOrder);
-    }
-
-    useEffect(() => {
-        schema.isValid(orderValues)
-            .then((valid) => {
-                setDisabled(!valid);
-            });
-    }, [orderValues]);
-
-
 
 
     return (
@@ -99,21 +88,23 @@ const OrderForm = ({ order, setOrder }) => {
                 <div>
                     <img src={`https://media.istockphoto.com/photos/clap-hands-of-baker-with-flour-in-kitchen-picture-id1134470382?k=20&m=1134470382&s=612x612&w=0&h=bXL_rP7xXfB9htp-eiiQPgzv4qtVgh7SoriOZorun8c=`} />
                 </div>
-                <form onSubmit={SubmitHandler} id="pizza-form">
+                <form onSubmit={submit} id="pizza-form">
                     <label>Size
                         <select id="size-dropdown" onChange={change} value={orderValues.size} name='size'>
                             <option value=''>- Size -</option>
-                            <option value='Small'>Small</option>
+                            <option data-test-id="size" value='Small'>Small</option>
                             <option value='Medium'>Medium</option>
                             <option value='Large'>Large</option>
                         </select>
                         <h5>Pizza size required</h5>
                     </label>
                     <div className="errors">{orderErrors.size}</div>
+                    <div className="errors">{orderErrors.sauce}</div>
                     <div className="sauce">
                         <h3>Sauce</h3>
                         <label>
                             <input
+                                data-test-id="sauce"
                                 type='radio'
                                 name='sauce'
                                 value='Marinara'
@@ -155,6 +146,7 @@ const OrderForm = ({ order, setOrder }) => {
                         <label>
                             <input
                                 key="0"
+                                data-test-id="toppings"
                                 type="checkbox"
                                 name="Olives"
                                 onChange={change}
@@ -165,6 +157,7 @@ const OrderForm = ({ order, setOrder }) => {
                         <label>
                             <input
                                 key="1"
+                                data-test-id="toppings"
                                 type="checkbox"
                                 name="Bacon"
                                 onChange={change}
@@ -175,6 +168,7 @@ const OrderForm = ({ order, setOrder }) => {
                         <label>
                             <input
                                 key="2"
+                                data-test-id="toppings"
                                 type="checkbox"
                                 name="Mushrooms"
                                 onChange={change}
@@ -185,6 +179,7 @@ const OrderForm = ({ order, setOrder }) => {
                         <label>
                             <input
                                 key="3"
+                                data-test-id="toppings"
                                 type="checkbox"
                                 name="Jalapenos"
                                 onChange={change}
@@ -195,6 +190,7 @@ const OrderForm = ({ order, setOrder }) => {
                         <label>
                             <input
                                 key="4"
+                                data-test-id="toppings"
                                 type="checkbox"
                                 name="Cheesier"
                                 onChange={change}
@@ -215,6 +211,7 @@ const OrderForm = ({ order, setOrder }) => {
                     <label>Name{" "}
                         <input
                             id="name-input"
+                            data-test-id="fullname"
                             type="text"
                             name="name"
                             value={orderValues.name}
@@ -222,12 +219,11 @@ const OrderForm = ({ order, setOrder }) => {
                             onChange={change} />
                     </label>
                     <div className="errors">{orderErrors.name}</div>
-                    <button type="submit" disabled={disabled} id="order-button">Add to Order</button>
+                    <button data-test-id="submitBtn" disabled={disabled} id="order-button" onSubmit={submit}>Add to Order</button>
                     <div className="order-container">
-                        {orders.map((order) => {
+                        {orders.map(order => {
                             if (!order) {
-                                return <h3>Preparing your order...</h3>;
-
+                                return <h3>Congrats! Pizza is on it's way!</h3>;
                             }
                             return (
                                 <div className="order-details">
@@ -242,7 +238,7 @@ const OrderForm = ({ order, setOrder }) => {
                                     <p>{order.toppings[2]}</p>
                                     <p>{order.toppings[3]}</p>
                                     <p>{order.toppings[4]}</p>
-                                    <h4>Here are the special instructions:</h4>
+                                    <h4>Here are the special instructions</h4>
                                     <p>{order.instructions}</p>
                                 </div>
                             );
